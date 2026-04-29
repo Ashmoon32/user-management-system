@@ -1,10 +1,15 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user'])) {
-    header("Location: index.php");
-    exit();
-}
+include("vendor/autoload.php");
+
+use Helpers\Auth;
+
+$auth = Auth::check();
+
+// echo "<pre>";
+// print_r($auth);
+// echo "</pre>";
 ?>
 
 
@@ -19,8 +24,13 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-3">Ashmoon (Manager)</h1>
+    <div class="container">
+        <h1 class="mt-5 mb-5">
+            <?= $auth->name ?>
+            <span class="fw-normal text-muted">
+                (<?= $auth->role ?>)
+            </span>
+        </h1>
 
         <?php if (isset($_GET['error'])): ?>
             <div class="alert alert-warning">
@@ -28,9 +38,13 @@ if (!isset($_SESSION['user'])) {
             </div>
         <?php endif ?>
 
-        <?php if (file_exists('_actions/photos/profile.jpg')): ?>
-            <img src="_actions/photos/profile.jpg" alt="profile image" class="img-thumbnail mb-3" width="200">
+        <?php if ($auth->photo): ?>
+            <img src="_actions/photos/<?= $auth->photo ?>" alt="Profile photo" width="200" class="img-thumbnail mb-3">
         <?php endif ?>
+
+        <!-- <?php if (file_exists('_actions/photos/profile.jpg')): ?>
+            <img src="_actions/photos/profile.jpg" alt="profile image" class="img-thumbnail mb-3" width="200">
+        <?php endif ?> -->
 
         <form action="_actions/upload.php" method="POST" enctype="multipart/form-data">
             <div class="input-group mb-3">
@@ -40,17 +54,18 @@ if (!isset($_SESSION['user'])) {
         </form>
         <ul class="list-group">
             <li class="list-group-item">
-                <b>Email:</b> ashmoon32@gmail.com
+                <b>Email:</b> <?= $auth->email ?>
             </li>
             <li class="list-group-item">
-                <b>Phone:</b> (09) 243 867 645
+                <b>Phone:</b> <?= $auth->phone ?>
             </li>
             <li class="list-group-item">
-                <b>Address:</b> No. 321, Main Street, West City
+                <b>Address:</b> <?= $auth->address ?>
             </li>
         </ul>
         <br>
-        <a href="_actions/logout.php">Logout</a>
+        <a href="admin.php">Manage Users</a> |
+        <a href="_actions/logout.php" class="text-danger">Logout</a>
     </div>
 </body>
 
