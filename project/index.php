@@ -25,9 +25,15 @@
         <?php endif ?>
 
         <?php if (isset($_GET['suspended'])): ?>
-            <div class="alert alert-danger">
-                Your account is suspended.
-            </div>
+            <?php if ($_GET['suspended'] == 1): ?>
+                <div class="alert alert-danger">
+                    Your account is banned for serious violations!
+                </div>
+            <?php else: ?>
+                <div class="alert alert-danger">
+                    Your account is suspended.
+                </div>
+            <?php endif ?>
         <?php endif ?>
 
         <?php
