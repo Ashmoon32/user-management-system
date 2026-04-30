@@ -80,8 +80,8 @@ $auth = Auth::check();
                                     <a href="_actions/role.php?id=<?= $user->id ?>&role=2" class="dropdown-item">Manager</a>
                                     <a href="_actions/role.php?id=<?= $user->id ?>&role=3" class="dropdown-item">Admin</a>
                                 </div>
-                                <?php if ($user->suspended): ?>
-                                    <a href="_actions/unsuspend.php?id=<?= $user->id ?>" class="btn btn-sm btn-danger">Suspended</a>
+                                <?php if ($user->suspend): ?>
+                                    <a href="_actions/unsuspend.php?id=<?= $user->id ?>" class="btn btn-sm btn-danger">Suspend</a>
                                 <?php else: ?>
                                     <a href="_actions/suspend.php?id=<?= $user->id ?>"
                                         class="btn btn-sm btn-outline-success">Active</a>
